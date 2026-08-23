@@ -1,0 +1,11 @@
+# Gradle・ビルド成果物
+.gradle/
+build/
+out/
+
+# IDE（IntelliJ）設定ファイル
+.idea/
+*.iml
+
+# OS固有ファイル
+.DS_Store
