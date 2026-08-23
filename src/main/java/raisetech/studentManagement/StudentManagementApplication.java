@@ -49,4 +49,4 @@ public class StudentManagementApplication {
     List<Student> students = repository.findAllStudents();
 	return students;
 }
-}
+ }
