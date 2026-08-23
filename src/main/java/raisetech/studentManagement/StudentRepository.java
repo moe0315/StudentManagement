@@ -25,4 +25,4 @@ public interface StudentRepository {
   @Select("SELECT * FROM student")
   List<Student> findAllStudents();
 
-}　
+}
