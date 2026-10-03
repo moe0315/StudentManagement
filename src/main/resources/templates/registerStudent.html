@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>受講生・コース登録</title>
+</head>
+<body>
+<h1>受講生・コース登録</h1>
+<form th:action="@{/registerStudent}" th:object="${studentDetail}" method="post">
+
+  <!-- エラーメッセージを赤字で表示 -->
+  <div th:if="${#fields.hasErrors('*')}" style="color: red; background-color: #fee; padding: 10px; margin-bottom: 15px; border: 1px solid red;">
+    <h4>入力または型変換のエラーが発生しています：</h4>
+    <ul>
+      <li th:each="err : ${#fields.errors('*')}" th:text="${err}">エラー内容</li>
+    </ul>
+  </div>
+
+  <!-- ================= 受講生情報 ================= -->
+  <h2>受講生基本情報</h2>
+  <div>
+    <label for="name">名前:</label>
+    <input type="text" id="name" th:field="*{student.name}" required />
+  </div>
+  <div>
+    <label for="kanaName">カナ名:</label>
+    <input type="text" id="kanaName" th:field="*{student.kanaName}" required />
+  </div>
+  <div>
+    <label for="nickName">ニックネーム:</label>
+    <input type="text" id="nickName" th:field="*{student.nickname}" required />
+  </div>
+  <div>
+    <label for="emailAddress">メールアドレス:</label>
+    <input type="email" id="emailAddress" th:field="*{student.emailAddress}" required />
+  </div>
+  <div>
+    <label for="city">地域:</label>
+    <input type="text" id="city" th:field="*{student.city}" required />
+  </div>
+  <div>
+    <label for="age">年齢:</label>
+    <input type="number" id="age" th:field="*{student.age}" min="0" max="120" required />
+  </div>
+  <div>
+    <label>性別:</label>
+    <input type="radio" id="genderMale" th:field="*{student.gender}" value="男性" required />
+    <label for="genderMale">男性</label>
+
+    <input type="radio" id="genderFemale" th:field="*{student.gender}" value="女性" />
+    <label for="genderFemale">女性</label>
+
+    <input type="radio" id="genderOther" th:field="*{student.gender}" value="その他" />
+    <label for="genderOther">その他</label>
+  </div>
+  <div>
+    <label for="remark">備考:</label>
+    <input type="text" id="remark" th:field="*{student.remark}" />
+  </div>
+
+  <hr>
+
+  <!-- ================= コース情報 ================= -->
+  <h2>コース情報</h2>
+
+  <div>
+    <label for="coursesName">コース名:</label>
+    <input type="text" id="coursesName" th:field="*{studentsCourses[0].coursesName}" required />
+  </div>
+  <div>
+    <label for="startDate">受講開始日:</label>
+    <input type="date" id="startDate" th:field="*{studentsCourses[0].startDate}" required />
+  </div>
+  <div>
+    <label for="endDate">受講終了予定日:</label>
+    <input type="date" id="endDate" th:field="*{studentsCourses[0].endDate}" required />
+  </div>
+
+  <br>
+  <div>
+    <button type="submit">登録</button>
+  </div>
+</form>
+</body>
+</html>
