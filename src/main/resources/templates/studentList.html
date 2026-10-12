@@ -1,45 +1,111 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+  <meta charset="UTF-8">
   <title>受講生一覧</title>
+  <style>
+    /* 横スクロール対応用のスタイル */
+    .table-container {
+      width: 100%;
+      overflow-x: auto; /* 画面幅を超えたら横スクロールバーを表示 */
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 1200px; /* テーブル全体の最小幅を確保 */
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background-color: #f2f2f2;
+      white-space: nowrap;
+    }
+  </style>
 </head>
 <body>
+
 <h1>受講生一覧</h1>
-<table border="1">
-  <thead>
-  <tr>
-    　
-    <th>ID</th>　
-    <th>名前</th>　
-    <th>カナ名</th>　
-    <th>ニックネーム</th>　
-    <th>メールアドレス</th>　
-    <th>地域</th>　
-    <th>年齢</th>　
-    <th>性別</th>　
-    <th>備考</th>
-    <th>コース名</th>
-    <th>受講開始日</th>
-    <th>受講終了予定日</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="studentDetail : ${studentList}">
-    <td th:text="${studentDetail.student.id}">s001</td>
-    <td th:text="${studentDetail.student.name}">SatohMoe</td>
-    <td th:text="${studentDetail.student.kanaName}">サトウモエ</td>
-    <td th:text="${studentDetail.student.nickname}">もーりー</td>
-    <td th:text="${studentDetail.student.emailAddress}">moe.satoh@example.com</td>
-    <td th:text="${studentDetail.student.city}">宮城県仙台市</td>
-    <td th:text="${studentDetail.student.age}">25</td>
-    <td th:text="${studentDetail.student.gender}">女性</td>
-    <td th:text="${studentDetail.student.remark}">特になし</td>
-    <!-- コース情報（1件目のコースを表示する） -->
-    <td th:text="${studentDetail.studentsCourses != null && !studentDetail.studentsCourses.isEmpty() ? studentDetail.studentsCourses[0].coursesName : ''}">Javaスタンダード</td>
-    <td th:text="${studentDetail.studentsCourses != null && !studentDetail.studentsCourses.isEmpty() ? studentDetail.studentsCourses[0].startDate : ''}">2026/04/01</td>
-    <td th:text="${studentDetail.studentsCourses != null && !studentDetail.studentsCourses.isEmpty() ? studentDetail.studentsCourses[0].endDate : ''}">2026/09/30</td>
-  </tr>
-  </tbody>
-</table>
+
+<!-- 横スクロール用のコンテナ div で囲む -->
+<div class="table-container">
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>名前</th>
+      <th>カナ名</th>
+      <th>ニックネーム</th>
+      <th>メールアドレス</th>
+      <th>地域</th>
+      <th>年齢</th>
+      <th>性別</th>
+      <th>備考</th>
+      <th>コース名</th>
+      <th>受講開始日</th>
+      <th>受講終了予定日</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- 受講生1人につき 1つの <tr> でまとめる -->
+    <tr th:each="studentDetail : ${studentList}">
+      <td th:text="${studentDetail.student.id}">s001</td>
+      <td>
+        <a th:href="@{/student/{id}(id=${studentDetail.student.id})}" th:text="${studentDetail.student.name}">SatohMoe</a>
+      </td>
+      <td th:text="${studentDetail.student.kanaName}">サトウモエ</td>
+      <td th:text="${studentDetail.student.nickname}">もーりー</td>
+      <td th:text="${studentDetail.student.emailAddress}">moe.satoh@example.com</td>
+      <td th:text="${studentDetail.student.city}">宮城県仙台市</td>
+      <td th:text="${studentDetail.student.age}">25</td>
+      <td th:text="${studentDetail.student.gender}">女性</td>
+      <td th:text="${studentDetail.student.remark}">特になし</td>
+
+      <!-- 1. コース名 -->
+      <td>
+        <th:block th:if="${studentDetail.studentsCourses != null && !studentDetail.studentsCourses.isEmpty()}">
+          <div th:each="course : ${studentDetail.studentsCourses}"
+               th:text="${course.coursesName}"
+               style="white-space: nowrap; margin-bottom: 2px;">Javaスタンダード</div>
+        </th:block>
+        <th:block th:unless="${studentDetail.studentsCourses != null && !studentDetail.studentsCourses.isEmpty()}">
+          -
+        </th:block>
+      </td>
+
+      <!-- 2. 受講開始日 -->
+      <td>
+        <th:block th:if="${studentDetail.studentsCourses != null && !studentDetail.studentsCourses.isEmpty()}">
+          <div th:each="course : ${studentDetail.studentsCourses}"
+               th:text="${course.startDate}"
+               style="white-space: nowrap; margin-bottom: 2px;">2026-04-01</div>
+        </th:block>
+        <th:block th:unless="${studentDetail.studentsCourses != null && !studentDetail.studentsCourses.isEmpty()}">
+          -
+        </th:block>
+      </td>
+
+      <!-- 3. 受講終了予定日 -->
+      <td>
+        <th:block th:if="${studentDetail.studentsCourses != null && !studentDetail.studentsCourses.isEmpty()}">
+          <div th:each="course : ${studentDetail.studentsCourses}"
+               th:text="${course.endDate}"
+               style="white-space: nowrap; margin-bottom: 2px;">2026-09-30</div>
+        </th:block>
+        <th:block th:unless="${studentDetail.studentsCourses != null && !studentDetail.studentsCourses.isEmpty()}">
+          -
+        </th:block>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
 </body>
 </html>

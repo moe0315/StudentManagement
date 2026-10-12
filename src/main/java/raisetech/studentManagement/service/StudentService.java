@@ -54,4 +54,25 @@ public class StudentService {
       }
     }
   }
+  public StudentDetail searchStudentDetail(String id) {
+
+    Student student = repository.searchStudent(id);
+
+    List<StudentsCourses> courses = repository.searchStudentsCoursesByStudentsID(id);
+
+    StudentDetail studentDetail = new StudentDetail();
+    studentDetail.setStudent(student);
+    studentDetail.setStudentsCourses(courses);
+
+    return studentDetail;
+  }
+  @Transactional
+  public void updateStudent(StudentDetail studentDetail) {
+
+    repository.updateStudent(studentDetail.getStudent());
+
+    for (StudentsCourses course : studentDetail.getStudentsCourses()) {
+      repository.updateStudentsCourses(course);
+    }
+  }
 }
