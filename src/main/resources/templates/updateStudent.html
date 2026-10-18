@@ -50,7 +50,6 @@
     <label for="remark">備考:</label>
     <input type="text" id="remark" th:field="*{student.remark}" />
   </div>
-
   <hr>
 
   <!-- ================= コース情報 ================= -->
@@ -81,6 +80,10 @@
              th:id="|endDate${stat.index}|"
              th:field="*{studentsCourses[__${stat.index}__].endDate}"
              required />
+    </div>
+    <div>
+      <label for="isDeleted">キャンセル:</label>
+      <input type="checkbox" id="isDeleted" th:field="*{student.deleted}" />
     </div>
     <br>
   </div>
