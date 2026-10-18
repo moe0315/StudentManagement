@@ -12,7 +12,11 @@ public class StudentsCourses {
   private String id;
   private String studentsId;
   private String coursesName;
+
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate startDate;
+
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate endDate;
 
 }
