@@ -11,7 +11,7 @@ import raisetech.studentManagement.data.StudentsCourses;
 @Mapper
 public interface StudentRepository {
 
-  @Select("SELECT * FROM students")
+  @Select("SELECT * FROM students WHERE is_deleted = false")
   List<Student> search();
 
   @Select("SELECT * FROM students_courses")
@@ -38,7 +38,8 @@ public interface StudentRepository {
   @Select("SELECT * FROM students WHERE id = #{id}")
   Student searchStudent(String id);
   //受講生更新
-  @Update("UPDATE students SET name = #{name}, kana_name = #{kanaName}, nickname = #{nickname}, email_address = #{emailAddress}, city = #{city}, age = #{age}, gender = #{gender}, remark = #{remark} WHERE id = #{id}")
+  @Update("UPDATE students SET name = #{name}, kana_name = #{kanaName}, nickname = #{nickname}, email_address = #{emailAddress},"
+      + " city = #{city}, age = #{age}, gender = #{gender}, remark = #{remark}, is_deleted = #{deleted} WHERE id = #{id}")
   void updateStudent(Student student);
 
   // student_id に一致するコース一覧を取得するSQL
