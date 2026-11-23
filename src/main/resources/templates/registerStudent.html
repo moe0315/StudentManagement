@@ -62,27 +62,27 @@
   <!-- ================= コース情報 ================= -->
   <h2>コース情報</h2>
 
-  <div th:each="course, stat : *{studentsCourses}">
+  <div th:each="course, stat : *{studentCourse}">
 
     <div>
       <label th:for="|coursesName${stat.index}|">コース名:</label>
       <input type="text"
              th:id="|coursesName${stat.index}|"
-             th:field="*{studentsCourses[__${stat.index}__].coursesName}"
+             th:field="*{studentCourse[__${stat.index}__].coursesName}"
              required />
     </div>
     <div>
       <label th:for="|startDate${stat.index}|">受講開始日:</label>
       <input type="date"
              th:id="|startDate${stat.index}|"
-             th:field="*{studentsCourses[__${stat.index}__].startDate}"
+             th:field="*{studentCourse[__${stat.index}__].startDate}"
              required />
     </div>
     <div>
       <label th:for="|endDate${stat.index}|">受講終了予定日:</label>
       <input type="date"
              th:id="|endDate${stat.index}|"
-             th:field="*{studentsCourses[__${stat.index}__].endDate}"
+             th:field="*{studentCourse[__${stat.index}__].endDate}"
              required />
     </div>
   <br>

@@ -69,36 +69,36 @@
 
       <!-- 1. コース名 -->
       <td>
-        <th:block th:if="${studentDetail.studentsCourses != null && !studentDetail.studentsCourses.isEmpty()}">
-          <div th:each="course : ${studentDetail.studentsCourses}"
+        <th:block th:if="${studentDetail.studentCourse != null && !studentDetail.studentCourse.isEmpty()}">
+          <div th:each="course : ${studentDetail.studentCourse}"
                th:text="${course.coursesName}"
                style="white-space: nowrap; margin-bottom: 2px;">Javaスタンダード</div>
         </th:block>
-        <th:block th:unless="${studentDetail.studentsCourses != null && !studentDetail.studentsCourses.isEmpty()}">
+        <th:block th:unless="${studentDetail.studentCourse != null && !studentDetail.studentCourse.isEmpty()}">
           -
         </th:block>
       </td>
 
       <!-- 2. 受講開始日 -->
       <td>
-        <th:block th:if="${studentDetail.studentsCourses != null && !studentDetail.studentsCourses.isEmpty()}">
-          <div th:each="course : ${studentDetail.studentsCourses}"
+        <th:block th:if="${studentDetail.studentCourse != null && !studentDetail.studentCourse.isEmpty()}">
+          <div th:each="course : ${studentDetail.studentCourse}"
                th:text="${course.startDate}"
                style="white-space: nowrap; margin-bottom: 2px;">2026-04-01</div>
         </th:block>
-        <th:block th:unless="${studentDetail.studentsCourses != null && !studentDetail.studentsCourses.isEmpty()}">
+        <th:block th:unless="${studentDetail.studentCourse != null && !studentDetail.studentCourse.isEmpty()}">
           -
         </th:block>
       </td>
 
       <!-- 3. 受講終了予定日 -->
       <td>
-        <th:block th:if="${studentDetail.studentsCourses != null && !studentDetail.studentsCourses.isEmpty()}">
-          <div th:each="course : ${studentDetail.studentsCourses}"
+        <th:block th:if="${studentDetail.studentCourse != null && !studentDetail.studentCourse.isEmpty()}">
+          <div th:each="course : ${studentDetail.studentCourse}"
                th:text="${course.endDate}"
                style="white-space: nowrap; margin-bottom: 2px;">2026-09-30</div>
         </th:block>
-        <th:block th:unless="${studentDetail.studentsCourses != null && !studentDetail.studentsCourses.isEmpty()}">
+        <th:block th:unless="${studentDetail.studentCourse != null && !studentDetail.studentCourse.isEmpty()}">
           -
         </th:block>
       </td>
