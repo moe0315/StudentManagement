@@ -6,47 +6,77 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import raisetech.studentManagement.data.Student;
-import raisetech.studentManagement.data.StudentsCourses;
+import raisetech.studentManagement.data.StudentCourse;
 
+/**
+ * 受講生テーブル、受講生コース情報テーブルと紐づくRepositoryです。
+ */
 @Mapper
 public interface StudentRepository {
 
-  @Select("SELECT * FROM students WHERE is_deleted = false")
+  /**
+   * 受講生の全件検索を行います。
+   * @return　受講生一覧（全件）
+   */
   List<Student> search();
 
-  @Select("SELECT * FROM students_courses")
-  List<StudentsCourses> searchStudentsCourses();
+  /**
+   * 受講生のコース情報の全件検索を行います。
+   * @return　受講生のコース情報（全件）
+   */
+  List<StudentCourse> searchStudentsCourses();
 
-  // current max id (数字部分) 取得。データが0件の場合は 0 を返す
-  @Select("SELECT COALESCE(MAX(CAST(SUBSTRING(id, 2) AS UNSIGNED)), 0) FROM students")
+  /**
+   * 受講生の検索を行います。
+   *
+   * @param id　受講生ID
+   * @return　受講生
+   */
+  Student searchStudent(String id);
+
+  /**
+   * 受講生IDに紐づく受講生コース情報を検索します。
+   * @param studentId　受講生ID
+   * @return　受講生IDに紐づく受講生コース情報
+   */
+  List<StudentCourse> searchStudentCourse(String studentId);
+
+  /**
+   * 受講生IDの最大値(数字部分)取得します。データが0件の場合は0を返します。
+   */
   int getMaxStudentIdNumber();
 
-  @Select("SELECT COALESCE(MAX(CAST(SUBSTRING(id, 2) AS UNSIGNED)), 0) FROM students_courses")
+  /**
+   * 受講生コースIDの最大値(数字部分)取得します。データが0件の場合は0を返します。
+   */
   int getMaxCourseIdNumber();
 
-  // ---- 登録用SQL ----
-
-  @Insert("INSERT INTO students (id, name, kana_name, nickname, email_address, city, age, gender, remark, is_deleted) " +
-      "VALUES (#{id}, #{name}, #{kanaName}, #{nickname}, #{emailAddress}, #{city}, #{age}, #{gender}, #{remark}, false)")
+  /**
+   * 受講生を新規登録します。
+   *
+   * @param student　受講生
+   */
   void registerStudent(Student student);
 
-  @Insert("INSERT INTO students_courses (id, students_id, courses_name, start_date, end_date) " +
-      "VALUES (#{id}, #{studentsId}, #{coursesName}, #{startDate}, #{endDate})")
-  void registerStudentCourse(StudentsCourses studentsCourses);
-
-  // IDに一致する受講生を1件取得するSQL
-  @Select("SELECT * FROM students WHERE id = #{id}")
-  Student searchStudent(String id);
-  //受講生更新
-  @Update("UPDATE students SET name = #{name}, kana_name = #{kanaName}, nickname = #{nickname}, email_address = #{emailAddress},"
-      + " city = #{city}, age = #{age}, gender = #{gender}, remark = #{remark}, is_deleted = #{deleted} WHERE id = #{id}")
+  /**
+   * 受講生を更新します。
+   *
+   * @param student　受講生
+   */
   void updateStudent(Student student);
 
-  // student_id に一致するコース一覧を取得するSQL
-  @Select("SELECT * FROM students_courses WHERE students_id = #{studentsId}")
-  List<StudentsCourses> searchStudentsCoursesByStudentsID(String studentId);
-  //コース更新
-  @Update("UPDATE students_courses SET courses_name = #{coursesName}, start_date = #{startDate}, end_date = #{endDate} WHERE id = #{id}")
-  void updateStudentsCourses(StudentsCourses studentCourse);
+  /**
+   * 受講生コース情報を新規登録します。
+   *
+   * @param studentCourse　受講生コース情報
+   */
+  void registerStudentCourse(StudentCourse studentCourse);
+
+  /**
+   * 受講生コース情報のコース名を更新します。
+   *
+   * @param studentCourse　受講生コース情報
+   */
+  void updateStudentCourse(StudentCourse studentCourse);
 
 }
